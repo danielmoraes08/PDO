@@ -2,9 +2,7 @@
 
     //Conexão com o Banco de Dados
     try {
-
         $pdo = new PDO("mysql:dbname=crudpdo;host=localhost","root","",);
-
     } 
     catch (PDOExeception $e) {
         echo 'Erro na conexão com o banco de dados: ' . $e->getMessage();
@@ -30,4 +28,15 @@
     $resultado->bindValue(':id',1);
     $resultado->bindValue(':e', 'a@gmail.com');
     $resultado->execute();*/
+
+    //Consulta de dados PDO
+    $resultado = $pdo->prepare('select * from pessoa where id=:id');
+    $resultado->bindValue(':id',1);
+    $resultado->execute();
+    $exibir = $resultado->fetch(PDO::FETCH_ASSOC);
+    //print_r($exibir);
+
+    foreach ($exibir as $key => $value) {
+        echo $key . ':' . $value . '<br>';
+    }
 ?>
